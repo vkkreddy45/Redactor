@@ -7,6 +7,7 @@ import project1
 def main(args):
     # Getting the Input
     if args.input:
+        print(args.input)
         input_data = project1.Read_file(args.input)
 
     if args.names:
@@ -21,7 +22,7 @@ def main(args):
     #
         input_data=project1.Redact_phones(input_data)
     
-    if args.gender:
+    if args.genders:
     # 
         input_data=project1.Redact_gender(input_data)
 

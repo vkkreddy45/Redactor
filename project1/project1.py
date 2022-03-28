@@ -1,6 +1,9 @@
 import spacy 
 import nltk
+#nltk.download("wordnet")
+#nltk.download("omw-1.4")
 import glob
+from itertools import chain
 import regex as re
 from nltk.corpus import wordnet
 import os
@@ -11,14 +14,16 @@ input_files=[]
 # Function for Getting the input data from Glob
 
 def Read_file(path):
-    idata=[]
-    for item in glob.glob(path,recursive=True):
-        input_files.append(item)
-    for each in input_files:
-        idata.append(open(each,'r').read())
-    return idata
+    idata = []
+    files = list(chain.from_iterable(path))
 
-# Util function to redact with \u2588
+    for i in range(len(files)):
+        finput = glob.glob(files[i])
+        for j in range(len(finput)):
+            dat = open(finput[j]).read()
+            idata.append(dat)
+            input_files.append(finput[j])
+    return idata
 
 def redact_names_with(token):
     if token.ent_iob != 0 and token.ent_type_ == 'PERSON':
@@ -165,7 +170,7 @@ def write_output(idata):
         print("Directory Exists")
 
     for i in range(len(outputfiles)):
-        despath = str(os.getcwd())+"\\files\\"+outputfiles[i]
+        despath = str(os.getcwd())+"/files/"+outputfiles[i]
         with open(despath, 'w+' , encoding='utf-8') as file:
             file.write(idata[i])
             file.close()
