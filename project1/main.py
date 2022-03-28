@@ -45,14 +45,14 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input', required=True, help="Input Files", nargs='*')
-    parser.add_argument('--names', required=False, help='Redact_names',default=None) 
-    parser.add_argument('--dates', required=False, help='Redact_dates',default=None)
-    parser.add_argument('--phones', required=False, help='Redact_phones',default=None)
-    parser.add_argument('--genders', required=False, help='Redact_gender',default=None)
-    parser.add_argument('--address', required=False, help='Redact_address',default=None)
-    parser.add_argument('--concept', required=True, help='Redact_concept')
-    parser.add_argument('--output', required=True, help='write_output')
+    parser.add_argument('--input', required=True, help="Input Files", nargs='*', action='append')
+    parser.add_argument('--names', required=False, help='Redact_names', action='store_true') 
+    parser.add_argument('--dates', required=False, help='Redact_dates', action='store_true')
+    parser.add_argument('--phones', required=False, help='Redact_phones', action='store_true')
+    parser.add_argument('--genders', required=False, help='Redact_gender', action='store_true')
+    parser.add_argument('--address', required=False, help='Redact_address', action='store_true')
+    parser.add_argument('--concept', help='Redact_concept')
+    parser.add_argument('--output', help='write_output')
     #parser.add_argument('--stats', required=True, help='write_status')
     args = parser.parse_args()
 
