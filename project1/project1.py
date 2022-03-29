@@ -55,7 +55,7 @@ def Redact_gender(idata):
         doc = nlp(i)
         temp = []
         for x in doc:
-            test = lambda x : '\u2588' if str(x) in gender else x
+            test = lambda x : '\u2589' if str(x) in gender else x
             temp.append(test(x))
         tdata.append(" ".join([str(x) for x in temp]))
     #print(tdata)
@@ -74,7 +74,7 @@ def Redact_dates(idata):
         dlist = set(dlist)
         temp = []
         for t in doc:
-            test = lambda z : '\u2588' if z in dlist else z
+            test = lambda z : '\u2587' if z in dlist else z
             temp.append(test(t))
         tdata.append(" ".join([str(x) for x in temp]))
     #print(tdata)
@@ -98,7 +98,7 @@ def Redact_phones(idata):
         result = result + list(ts)
         #print(result)
         for k in result:
-            text = text.replace(k,'\u2588')
+            text = text.replace(k,'\u2586')
         idata[i] = text
         tdata.append(text)
     #print(tdata)
@@ -122,7 +122,7 @@ def Redact_address(idata):
         temp_addr = addr.findall(text)
         print(temp_addr)
         for k in temp_addr:
-            text = text.replace(k,'\u2588')
+            text = text.replace(k,'\u2585')
         idata[i] = text
         tdata.append(text)
     #print(tdata)
@@ -147,7 +147,7 @@ def Redact_concept(idata, concept):
         doc = nlp(i)
         temp = []
         for t in doc:
-            test = lambda z : '\u2588' if str(t) in synonyms else z
+            test = lambda z : '\u2584' if str(t) in synonyms else z
             temp.append(test(t))
         tdata.append(" ".join([str(x) for x in temp]))
     return tdata
@@ -175,5 +175,12 @@ def write_output(idata):
             file.write(idata[i])
             file.close()
 
-def write_status():
-    pass
+def write_stats(idata):
+    for t in idata:
+        cnt_names = t.count('\u2588')
+        cnt_gender = t.count('\u2589')
+        cnt_dates = t.count('\u2587')
+        cnt_address = t.count('\u2585')
+        cnt_phones = t.count('\u2586')
+        cnt_concept = t.count('\u2584')
+    print(cnt_names,cnt_gender,cnt_dates,cnt_phones,cnt_address,cnt_concept)

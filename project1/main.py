@@ -38,9 +38,9 @@ def main(args):
     #
         project1.write_output(input_data)
 
-    # if args.stats:
+    if args.stats:
     # #
-    #     project1.write_stats(input_data)
+        project1.write_stats(input_data)
 
 
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parser.add_argument('--address', required=False, help='Redact_address', action='store_true')
     parser.add_argument('--concept', help='Redact_concept')
     parser.add_argument('--output', help='write_output')
-    #parser.add_argument('--stats', required=True, help='write_status')
+    parser.add_argument('--stats', required=False, help='write_status')
     args = parser.parse_args()
 
     main(args)
