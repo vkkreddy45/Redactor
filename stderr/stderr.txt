@@ -1,0 +1,6 @@
+Names: 17
+Dates: 12
+Phones: 1
+Genders: 6
+Address: 1
+Concepts: 2

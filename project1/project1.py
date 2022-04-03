@@ -22,6 +22,7 @@ def Read_file(path):
         for j in range(len(finput)):
             dat = open(finput[j]).read()
             idata.append(dat)
+            print(idata)
             input_files.append(finput[j])
     return idata
 
@@ -37,7 +38,6 @@ def redact_names(nlp_doc):
     return ' '.join(tokens)
 
 # Function for Reading Names
-
 def Redact_names(idata):
     tdata=[]
     for text in idata:
@@ -170,17 +170,39 @@ def write_output(idata):
         print("Directory Exists")
 
     for i in range(len(outputfiles)):
+        print(i)
         despath = str(os.getcwd())+"/files/"+outputfiles[i]
         with open(despath, 'w+' , encoding='utf-8') as file:
             file.write(idata[i])
             file.close()
 
 def write_stats(idata):
+    
+    cnt_names, cnt_gender, cnt_dates, cnt_address, cnt_phones, cnt_concept = [], [], [], [], [], []
+    
     for t in idata:
-        cnt_names = t.count('\u2588')
-        cnt_gender = t.count('\u2589')
-        cnt_dates = t.count('\u2587')
-        cnt_address = t.count('\u2585')
-        cnt_phones = t.count('\u2586')
-        cnt_concept = t.count('\u2584')
-    print(cnt_names,cnt_gender,cnt_dates,cnt_phones,cnt_address,cnt_concept)
+        cnt_names.append(t.count('\u2588'))
+        cnt_gender.append(t.count('\u2589'))
+        cnt_dates.append(t.count('\u2587'))
+        cnt_address.append(t.count('\u2585'))
+        cnt_phones.append(t.count('\u2586'))
+        cnt_concept.append(t.count('\u2584'))
+    #print(cnt_names,cnt_gender,cnt_dates,cnt_phones,cnt_address,cnt_concept)
+     # Parent Directory path
+    parent_dir = str(os.getcwd())
+     # Path
+    path = os.path.join(parent_dir, "stderr")
+    try:
+        os.mkdir(path)
+    except:
+        print("Directory Exists")
+    
+    despath = str(os.getcwd())+"/stderr/"+"stderr.txt"
+    with open(despath, 'w+' , encoding='utf-8') as file:
+        file.write("Names: "+str(sum(cnt_names))+"\n")
+        file.write("Dates: "+str(sum(cnt_dates))+"\n")
+        file.write("Phones: "+str(sum(cnt_phones))+"\n")
+        file.write("Genders: "+str(sum(cnt_gender))+"\n")
+        file.write("Address: "+str(sum(cnt_address))+"\n")
+        file.write("Concepts: "+str(sum(cnt_concept)))
+        file.close()
