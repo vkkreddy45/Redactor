@@ -57,12 +57,14 @@ In this Function, we intially create a directory. Then we create a file and writ
 
 # How to run the project
 
-```pipenv run python project1/main.py --input '*.txt' --names --dates --phones --genders --address --concept 'person' --output 'files/' --stats stderr
+```
+pipenv run python project1/main.py --input '*.txt' --names --dates --phones --genders --address --concept 'person' --output 'files/' --stats stderr
 ```
 
 # How to run the test cases
 
-```pipenv run python -m pytest
+```
+pipenv run python -m pytest
 ```
 
 # Bugs
