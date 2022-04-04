@@ -22,7 +22,7 @@ def Read_file(path):
         for j in range(len(finput)):
             dat = open(finput[j]).read()
             idata.append(dat)
-            print(idata)
+            #print(idata)
             input_files.append(finput[j])
     return idata
 
@@ -44,7 +44,9 @@ def Redact_names(idata):
         doc = nlp(text)
         tdata.append(redact_names(doc))
     #print(tdata)
-    return tdata
+    ncount = tdata[0].count('\u2588')
+    #print(tdata,ncount)
+    return tdata,ncount
 
 # Fuction for Genders
 def Redact_gender(idata):
@@ -58,8 +60,9 @@ def Redact_gender(idata):
             test = lambda x : '\u2589' if str(x) in gender else x
             temp.append(test(x))
         tdata.append(" ".join([str(x) for x in temp]))
-    #print(tdata)
-    return tdata
+    gcount = tdata[0].count('\u2589')
+    #print(tdata,gcount)
+    return tdata,gcount
 
 # Function for Reading dates
 
@@ -77,8 +80,9 @@ def Redact_dates(idata):
             test = lambda z : '\u2587' if z in dlist else z
             temp.append(test(t))
         tdata.append(" ".join([str(x) for x in temp]))
-    #print(tdata)
-    return tdata
+    dcount = tdata[0].count('\u2587')
+    #print(tdata,dcount)
+    return tdata,dcount
 # Function for Reading Phones
 
 def Redact_phones(idata):
@@ -102,7 +106,9 @@ def Redact_phones(idata):
         idata[i] = text
         tdata.append(text)
     #print(tdata)
-    return tdata
+    pcount = tdata[0].count('\u2586')
+    #print(tdata,pcount)
+    return tdata,pcount
 
 def Replace(char):
     if char =='\n':
@@ -126,7 +132,9 @@ def Redact_address(idata):
         idata[i] = text
         tdata.append(text)
     #print(tdata)
-    return tdata
+    acount = tdata[0].count('\u2585')
+    #print(tdata,acount)
+    return tdata,acount
 
 # Function for Reading concept
 
@@ -150,7 +158,9 @@ def Redact_concept(idata, concept):
             test = lambda z : '\u2584' if str(t) in synonyms else z
             temp.append(test(t))
         tdata.append(" ".join([str(x) for x in temp]))
-    return tdata
+    ccount = tdata[0].count('\u2584')
+    #print(tdata,ccount)
+    return tdata,ccount
 
 def write_output(idata):
     outputfiles=[]
@@ -158,7 +168,7 @@ def write_output(idata):
         newname = os.path.splitext(i)[0]
         newname = newname +'.redacted.txt'
         outputfiles.append(newname)
-    print(outputfiles)
+    #print(outputfiles)
 
     # Parent Directory path
     parent_dir = str(os.getcwd())
@@ -170,7 +180,7 @@ def write_output(idata):
         print("Directory Exists")
 
     for i in range(len(outputfiles)):
-        print(i)
+        #print(i)
         despath = str(os.getcwd())+"/files/"+outputfiles[i]
         with open(despath, 'w+' , encoding='utf-8') as file:
             file.write(idata[i])

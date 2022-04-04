@@ -3,4 +3,4 @@ Dates: 12
 Phones: 1
 Genders: 6
 Address: 1
-Concepts: 2
+Concepts: 1

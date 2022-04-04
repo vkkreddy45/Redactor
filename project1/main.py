@@ -12,27 +12,27 @@ def main(args):
 
     if args.names:
     # Reading names
-        input_data=project1.Redact_names(input_data)
+        input_data, count=project1.Redact_names(input_data)
     
     if args.dates:
     # 
-        input_data=project1.Redact_dates(input_data)
+        input_data, count=project1.Redact_dates(input_data)
     
     if args.phones:
     #
-        input_data=project1.Redact_phones(input_data)
+        input_data, count=project1.Redact_phones(input_data)
     
     if args.genders:
     # 
-        input_data=project1.Redact_gender(input_data)
+        input_data,count=project1.Redact_gender(input_data)
 
     if args.address:
     #
-        input_data=project1.Redact_address(input_data)
+        input_data,count=project1.Redact_address(input_data)
 
     if args.concept:
     #
-        input_data=project1.Redact_concept(input_data, args.concept)
+        input_data,count=project1.Redact_concept(input_data, args.concept)
 
     if args.output:
     #
@@ -41,6 +41,7 @@ def main(args):
     if args.stats:
     # #
         project1.write_stats(input_data)
+
 
 
 
