@@ -12,16 +12,17 @@ In this Project the main goal is to read the inputed text files and Pass the fil
 # Required Packages
 
 The below mentioned are the packages used for this Project:
-..* glob
-..* itertools
-..* nltk
-..* os
-..* regex
-..* spacy
+* glob
+* itertools
+* nltk
+* os
+* regex
+* spacy
 
 # Function Description
 
 1. Read_file(path): 
+
 ... In this function , we read the text files that are being passed with '*.txt' extension.  
 # How to run the project
 
