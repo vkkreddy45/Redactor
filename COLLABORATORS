@@ -1,0 +1,7 @@
+1. Glob Module, https://www.programcreek.com/python/example/4198/glob.iglob, Used this website to gain some knowledge and how to implement glob methods for the project.
+2. Name Entity Recognition, https://realpython.com/natural-language-processing-spacy-python/, Used this website for getting some idea regarding the entity relation.
+3. Regex Expressions, https://github.com/madisonmay/CommonRegex/blob/master/commonregex.py, Used this website for implementing Regex Expressions to Redact phone numbers and addresses.
+4. Wordnet, https://www.nltk.org/howto/wordnet.html, Used this as reference for implementing some of the nltk wordnet methods to redact the synonyms of the inputed concept.
+5. Directory, https://www.geeksforgeeks.org/create-a-directory-in-python/, Used this as reference for Creating a Directory in write output and stats functions.
+6. Warnings, https://docs.pytest.org/en/stable/how-to/capture-warnings.html, Used this as reference for removing some of the warnings due to version upgrades while running the test cases.
+7. Spacy, https://spacy.io/usage/training#ner, Used this website for getting some idea to implement some of the spacy concepts.
