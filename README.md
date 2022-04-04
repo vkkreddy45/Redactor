@@ -17,6 +17,8 @@ The below mentioned are the packages used for this Project:
 * regex
 * spacy
 
+Aditionally, I have created a pytest.ini file and added some code to eliminate some of the warnings that are being displayed while running the test cases.
+
 # Function Description
 
 1. Read_file(path): 
