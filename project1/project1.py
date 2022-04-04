@@ -208,6 +208,7 @@ def write_stats(idata):
     
     despath=str(os.getcwd())+"/stderr/"+"stderr.txt"
     with open(despath, 'w+' , encoding='utf-8') as file:
+        file.write("***Summary of the Redaction Process***"+"\n")
         file.write("Names: "+str(sum(cnt_names))+"\n")
         file.write("Dates: "+str(sum(cnt_dates))+"\n")
         file.write("Phones Numbers: "+str(sum(cnt_phones))+"\n")
