@@ -40,7 +40,8 @@ def main(args):
 
     if args.stats:
     # Writing stats into a File
-        project1.write_stats(input_data)
+        #print(args.stats)
+        project1.write_stats(input_data,args.stats)
 
 
 if __name__=='__main__':
@@ -53,7 +54,7 @@ if __name__=='__main__':
     parser.add_argument('--address', action='store_true', help='Redact_address', required=False)
     parser.add_argument('--concept', help='Redact_concept', required=True)
     parser.add_argument('--output', help='write_output', required=False)
-    parser.add_argument('--stats', help='write_status', required=False)
+    parser.add_argument('--stats', action='append', help='write_status', required=True)
     args=parser.parse_args()
 
     main(args)

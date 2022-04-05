@@ -124,7 +124,7 @@ def Redact_address(idata):
         text=re.sub(r'\n', '', text)
         addr=re.compile('\d{1,4} [\w\s]{1,20}(?:main|street|st|avenue|ave|road|rd|highway|hwy|square|sq|trail|trl|drive|dr|court|ct|park|parkway|parkwood|pkwy|circle|cir|boulevard|blvd|Blvd)\W?(?=\s|$) | \b\d{5}(?:[-\s]\d{4})?\b', re.IGNORECASE)
         temp_addr=addr.findall(text)
-        print(temp_addr)
+        #print(temp_addr)
         for k in temp_addr:
             text=text.replace(k,'\u2585')
         idata[i]=text
@@ -185,9 +185,10 @@ def write_output(idata):
 
 # Function writing the stats into File
 
-def write_stats(idata):    
+def write_stats(idata,fname):    
     cnt_names, cnt_gender, cnt_dates, cnt_address, cnt_phones, cnt_concept=[], [], [], [], [], []
-    
+    #print(fname)
+    fname=fname[0]
     for t in idata:
         cnt_names.append(t.count('\u2588'))
         cnt_gender.append(t.count('\u2589'))
@@ -200,13 +201,13 @@ def write_stats(idata):
     # Parent Directory path
     parent_dir=str(os.getcwd())
     # Path
-    path=os.path.join(parent_dir, "stderr")
+    path=os.path.join(parent_dir, fname)
     try:
         os.mkdir(path)
     except:
         print("Directory Exists")
     
-    despath=str(os.getcwd())+"/stderr/"+"stderr.txt"
+    despath=str(os.getcwd())+"/"+fname+"/"+fname+".txt"
     with open(despath, 'w+' , encoding='utf-8') as file:
         file.write("***Summary of the Redaction Process***"+"\n")
         file.write("Names: "+str(sum(cnt_names))+"\n")
