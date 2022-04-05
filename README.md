@@ -150,6 +150,7 @@ pipenv run python -m pytest
 ```
 
 
-# Bugs
+# Bugs & Assumptions
 
 * One might face problem, For the address function as it only works for few expressions but not for all the address expressions.
+* Sometimes due to format mismatches in the text data there will be no redaction done for few values or expressions or strings.
