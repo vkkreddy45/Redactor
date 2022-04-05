@@ -1,7 +1,7 @@
 ***Summary of the Redaction Process***
-Names: 17
-Dates: 12
-Phones Numbers: 1
-Genders: 6
-Address: 1
+Names: 41
+Dates: 32
+Phones Numbers: 55
+Genders: 14
+Address: 2
 Concepts: 1

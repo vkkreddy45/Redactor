@@ -122,7 +122,7 @@ def Redact_address(idata):
     tdata=[]
     for i,text in enumerate(idata):
         text=re.sub(r'\n', '', text)
-        addr=re.compile('\d{1,4} [\w\s]{1,20}(?:main|street|st|avenue|ave|road|rd|highway|hwy|square|sq|trail|trl|drive|dr|court|ct|park|parkway|parkwood|pkwy|circle|cir|boulevard|blvd|Blvd)\W?(?=\s|$) | \b\d{5}(?:[-\s]\d{4})?\b', re.IGNORECASE)
+        addr=re.compile('\d+[ ](?:[A-Za-z0-9.-]+[ ]?)+(?:Avenue|Lane|Road|Boulevard|Drive|Norman|norman|oklahoma|classen|Street|Ave|Dr|Rd|Blvd|blvd|Ln|St|)\.?', re.IGNORECASE)
         temp_addr=addr.findall(text)
         #print(temp_addr)
         for k in temp_addr:
