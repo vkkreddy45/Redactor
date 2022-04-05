@@ -136,6 +136,11 @@ or
 ```
 pipenv run python project1/redactor.py --input '*.txt' --names --dates --phones --genders --address --concept 'person' --output 'files/' --stats stdout
 ```
+or
+
+```
+pipenv run python project1/redactor.py --input '*.txt' --names --dates --phones --genders --address --concept 'person' --concepts'kids' --output 'files/' --stats stderr
+```
 
 
 # How to run the test cases
