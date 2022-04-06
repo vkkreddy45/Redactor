@@ -14,7 +14,8 @@ In this Project the main goal is to read the inputed text files and Pass the fil
 **[Function Description](#function-description)**<br>
 **[How to run the project](#how-to-run-the-project)**<br>
 **[How to run the test cases](#how-to-run-the-test-cases)**<br>
-**[Bugs](#bugs)**<br>
+**[Bugs and Assumptions](#bugs-and-assumptions)**<br>
+**[References](#references)**<br>
 
 
 # Required Packages
@@ -150,7 +151,22 @@ pipenv run python -m pytest
 ```
 
 
-# Bugs & Assumptions
+# Bugs and Assumptions
 
 * One might face problem, For the address function as it only works for few expressions but not for all the address expressions.
 * Sometimes due to format mismatches in the text data there will be no redaction done for few values or expressions or strings.
+* One might have trouble when they are not passsing the text file.
+* one may get errors when the packages are not installed properly.
+* One may get as there exists directory and the overridden changes are written to the existing file when there is already existing file.
+
+# References
+
+* [Glob Module Examples](https://www.programcreek.com/python/example/4198/glob.iglob)
+* [Name Entity Recognition Examples](https://realpython.com/natural-language-processing-spacy-python/)
+* [Regex Expressions Methods](https://github.com/madisonmay/CommonRegex/blob/master/commonregex.py)
+* [Wordnet Documentation](https://www.nltk.org/howto/wordnet.html)
+* [Directory Creation Examples](https://www.geeksforgeeks.org/create-a-directory-in-python/)
+* [Warnings Capturing](https://docs.pytest.org/en/stable/how-to/capture-warnings.html)
+* [Spacy Models](https://spacy.io/usage/training#ner)
+
+For Detailed Information about the references check out Collaborators File. 
