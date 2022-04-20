@@ -7,6 +7,7 @@ from nltk.corpus import wordnet
 import os
 import regex as re
 import spacy
+import sys
 
 nlp=spacy.load("en_core_web_sm")
 input_files=[]
@@ -45,22 +46,30 @@ def Redact_names(idata):
     #print(tdata)
     ncount=tdata[0].count('\u2588')
     #print(tdata,ncount)
+    print('namecount: ', ncount)
     return tdata,ncount
 
 # Fuction for Reading Genders
 
 def Redact_gender(idata):
     tdata=[]
+    gcount=0
     # Pronous for genders
     gender=['female','man','woman','men','he','she','him','her','his','hers','male','women','He','She','Him','Her','His','Hers','Male','Female','Man','Woman','Men','Women','HE','SHE','HIM','HER','HIS','HERS','MALE','FEMALE','MAN','WOMAN','MEN','WOMEN']
     for i in idata:
         doc=nlp(i)
         temp=[]
         for x in doc:
-            test=lambda x:'\u2589' if str(x) in gender else x
-            temp.append(test(x))
+            if str(x) in gender:
+                x='\u2588'
+                gcount+=1
+            #test=lambda x:'\u2587' if str(x) in gender else x
+            #gcount = gcount+sum(map(lambda x: x=='\u2587', str(x)))
+            #test=lambda x:'\u2588' if str(x)=='\u2587' else x
+            temp.append(x)
         tdata.append(" ".join([str(x) for x in temp]))
-    gcount=tdata[0].count('\u2589')
+    print('gendercount:', gcount)
+    #gcount=tdata[0].count('\u2589')
     #print(tdata,gcount)
     return tdata,gcount
 
@@ -68,6 +77,7 @@ def Redact_gender(idata):
 
 def Redact_dates(idata):
     tdata=[]
+    dcount=0
     for i in idata:
         doc=nlp(i)
         dlist=[]
@@ -77,10 +87,16 @@ def Redact_dates(idata):
         dlist=set(dlist)
         temp=[]
         for t in doc:
-            test=lambda z:'\u2587' if z in dlist else z
-            temp.append(test(t))
+            if t in dlist:
+                t='\u2588'
+                dcount+=1
+            #test=lambda z:'\u2586' if z in dlist else z
+            #dcount = dcount+sum(map(lambda x: x=='\u2586', str(x)))
+            #test=lambda x:'\u2588' if str(x)=='\u2586' else x
+            temp.append(t)
         tdata.append(" ".join([str(x) for x in temp]))
-    dcount=tdata[0].count('\u2587')
+    print('date count: ',dcount)
+    #dcount=tdata[0].count('\u2587')
     #print(tdata,dcount)
     return tdata,dcount
 
@@ -88,6 +104,7 @@ def Redact_dates(idata):
 
 def Redact_phones(idata):
     tdata=[]
+    pcount=0
     for i,text in enumerate(idata):
         ri=r'\d{3}\s*[ - \.\s]\s*\d{3}\s*[ - \.\s]\s*\d{4}|\(\d{3}\)\s*\d{3}\s*[ - \.\s]\d{4}|\d{3}[ - \.\s]\d{4}'
         result=re.findall(ri,text)
@@ -102,11 +119,13 @@ def Redact_phones(idata):
         result=result + list(ts)
         #print(result)
         for k in result:
-            text=text.replace(k,'\u2586')
+            pcount+=1
+            text=text.replace(k,'\u2588')
         idata[i]=text
         tdata.append(text)
     #print(tdata)
-    pcount=tdata[0].count('\u2586')
+    #pcount=tdata[0].count('\u2588')
+    print('phone count: ',pcount)
     #print(tdata,pcount)
     return tdata,pcount
 
@@ -120,17 +139,20 @@ def Replace(char):
 def Redact_address(idata):
     #print(idata)
     tdata=[]
+    acount=0
     for i,text in enumerate(idata):
         text=re.sub(r'\n', '', text)
         addr=re.compile('\d+[ ](?:[A-Za-z0-9.-]+[ ]?)+(?:Avenue|Lane|Road|Boulevard|Drive|Norman|norman|oklahoma|classen|Street|Ave|Dr|Rd|Blvd|blvd|Ln|St|)\.?', re.IGNORECASE)
         temp_addr=addr.findall(text)
         #print(temp_addr)
         for k in temp_addr:
-            text=text.replace(k,'\u2585')
+            acount+=1
+            text=text.replace(k,'\u2588')
         idata[i]=text
         tdata.append(text)
     #print(tdata)
-    acount=tdata[0].count('\u2585')
+    #acount=tdata[0].count('\u2588')
+    print('address count: ',acount)
     #print(tdata,acount)
     return tdata,acount
 
@@ -139,6 +161,7 @@ def Redact_address(idata):
 def Redact_concept(idata, concept):
     tdata=[]
     syn=wordnet.synsets(concept)
+    ccount=0
     synonyms=[]
     for i in syn:
         for l in i.lemmas():
@@ -151,10 +174,17 @@ def Redact_concept(idata, concept):
         doc=nlp(i)
         temp=[]
         for t in doc:
-            test=lambda z:'\u2584' if str(t) in synonyms else z
-            temp.append(test(t))
+            if str(t) in synonyms:
+                t='\u2588'
+                ccount+=1
+            #test=lambda z:'\u2582' if str(t) in synonyms else z
+            #ccount = ccount+sum(map(lambda t: t=='\u2582', str(t)))
+            #test=lambda x:'\u2588' if str(x)=='\u2582' else x
+            temp.append(t)
         tdata.append(" ".join([str(x) for x in temp]))
-    ccount=tdata[0].count('\u2584')
+    #ccount=tdata[0].count('\u2588')
+    print('Concept Count: ', ccount)
+    #print('concept count: ',ccount)
     #print(tdata,ccount)
     return tdata,ccount
 
@@ -163,8 +193,8 @@ def Redact_concept(idata, concept):
 def write_output(idata):
     outputfiles=[]
     for i in input_files:
-        newname=os.path.splitext(i)[0]
-        newname=newname +'.redacted.txt'
+        newname=i
+        newname=newname +'.redacted'
         outputfiles.append(newname)
     #print(outputfiles)
 
@@ -182,38 +212,3 @@ def write_output(idata):
         with open(despath, 'w+' , encoding='utf-8') as file:
             file.write(idata[i])
             file.close()
-
-# Function writing the stats into File
-
-def write_stats(idata,fname):    
-    cnt_names, cnt_gender, cnt_dates, cnt_address, cnt_phones, cnt_concept=[], [], [], [], [], []
-    #print(fname)
-    fname=fname[0]
-    for t in idata:
-        cnt_names.append(t.count('\u2588'))
-        cnt_gender.append(t.count('\u2589'))
-        cnt_dates.append(t.count('\u2587'))
-        cnt_address.append(t.count('\u2585'))
-        cnt_phones.append(t.count('\u2586'))
-        cnt_concept.append(t.count('\u2584'))
-    #print(cnt_names,cnt_gender,cnt_dates,cnt_phones,cnt_address,cnt_concept)
-
-    # Parent Directory path
-    parent_dir=str(os.getcwd())
-    # Path
-    path=os.path.join(parent_dir, fname)
-    try:
-        os.mkdir(path)
-    except:
-        print("Directory Exists")
-    
-    despath=str(os.getcwd())+"/"+fname+"/"+fname+".txt"
-    with open(despath, 'w+' , encoding='utf-8') as file:
-        file.write("***Summary of the Redaction Process***"+"\n")
-        file.write("Names: "+str(sum(cnt_names))+"\n")
-        file.write("Dates: "+str(sum(cnt_dates))+"\n")
-        file.write("Phones Numbers: "+str(sum(cnt_phones))+"\n")
-        file.write("Genders: "+str(sum(cnt_gender))+"\n")
-        file.write("Address: "+str(sum(cnt_address))+"\n")
-        file.write("Concepts: "+str(sum(cnt_concept)))
-        file.close()
