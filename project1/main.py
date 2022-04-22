@@ -11,6 +11,7 @@ import sys
 
 nlp=spacy.load("en_core_web_sm")
 input_files=[]
+output = {}
 
 # Function for getting data from glob
 
@@ -46,7 +47,8 @@ def Redact_names(idata):
     #print(tdata)
     ncount=tdata[0].count('\u2588')
     #print(tdata,ncount)
-    print('namecount: ', ncount)
+    output['Names:']=ncount
+    #print('namecount: ', ncount)
     return tdata,ncount
 
 # Fuction for Reading Genders
@@ -68,9 +70,10 @@ def Redact_gender(idata):
             #test=lambda x:'\u2588' if str(x)=='\u2587' else x
             temp.append(x)
         tdata.append(" ".join([str(x) for x in temp]))
-    print('gendercount:', gcount)
+    #print('gendercount:', gcount)
     #gcount=tdata[0].count('\u2589')
     #print(tdata,gcount)
+    output['Genders:']=gcount
     return tdata,gcount
 
 # Function for Reading dates
@@ -95,9 +98,10 @@ def Redact_dates(idata):
             #test=lambda x:'\u2588' if str(x)=='\u2586' else x
             temp.append(t)
         tdata.append(" ".join([str(x) for x in temp]))
-    print('date count: ',dcount)
+    #print('date count: ',dcount)
     #dcount=tdata[0].count('\u2587')
     #print(tdata,dcount)
+    output['Dates:']=dcount
     return tdata,dcount
 
 # Function for Reading Phones numbers
@@ -125,8 +129,9 @@ def Redact_phones(idata):
         tdata.append(text)
     #print(tdata)
     #pcount=tdata[0].count('\u2588')
-    print('phone count: ',pcount)
+    #print('phone count: ',pcount)
     #print(tdata,pcount)
+    output['Phonenumbers:']=pcount
     return tdata,pcount
 
 def Replace(char):
@@ -152,8 +157,9 @@ def Redact_address(idata):
         tdata.append(text)
     #print(tdata)
     #acount=tdata[0].count('\u2588')
-    print('address count: ',acount)
+    #print('address count: ',acount)
     #print(tdata,acount)
+    output['Address:']=acount
     return tdata,acount
 
 # Function for Reading concept
@@ -183,9 +189,10 @@ def Redact_concept(idata, concept):
             temp.append(t)
         tdata.append(" ".join([str(x) for x in temp]))
     #ccount=tdata[0].count('\u2588')
-    print('Concept Count: ', ccount)
+    #print('Concept Count: ', ccount)
     #print('concept count: ',ccount)
     #print(tdata,ccount)
+    output['Concepts:']=ccount
     return tdata,ccount
 
 # Function for Writing Output to the Files
@@ -196,7 +203,6 @@ def write_output(idata,directory):
         newname=i
         newname=newname +'.redacted'
         outputfiles.append(newname)
-    #print(outputfiles)
 
     # Parent Directory path
     parent_dir=str(os.getcwd())

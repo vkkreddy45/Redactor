@@ -2,13 +2,14 @@
 # Example main.py
 import argparse
 from project1 import main
+import sys
 
 def mains(args):
     i=0
-    stats ={}
+    stats={}
     # Getting the input data
     if args.input:
-        print(args.input)
+        #print(args.input)
         input_data=main.Read_file(args.input)
 
     if args.names:
@@ -50,16 +51,17 @@ def mains(args):
         main.write_output(input_data,directory)
 
     if args.stats:
+        #print(args.stats)
     # Writing stats into a File
-        if args.stats!='stderr' and args.stats!='stdout':
+        if args.stats[0] =='stderr':
+            sys.stderr.write("This is error msg")
+        elif args.stats[0] =='stdout':
+            print("<---Summary of Redaction--->\n")
+            sys.stdout.write(str(stats))
+        elif args.stats[0]!='stderr' and args.stats[0]!='stdout':
             f = open(args.stats[0],'w')
             print("---Summary of Redaction-----\n",stats, file=f)
-        elif args.stats =='stderr':
-            print("---Summary of Redaction-----\n",stats, file=sys.stdout)
-        elif args.stats =='stdout':
-            print("---Summary of Redaction-----\n",stats,  file=sys.stdout)
         
-
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
     parser.add_argument('--input', action='append', help="Input Files", nargs='*', required=True)
