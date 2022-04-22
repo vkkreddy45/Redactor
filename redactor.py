@@ -46,7 +46,8 @@ def mains(args):
 
     if args.output:
     # Writing data into a File
-        main.write_output(input_data)
+        directory = args.output[0:len(args.output)-1]
+        main.write_output(input_data,directory)
 
     if args.stats:
     # Writing stats into a File

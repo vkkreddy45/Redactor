@@ -190,7 +190,7 @@ def Redact_concept(idata, concept):
 
 # Function for Writing Output to the Files
 
-def write_output(idata):
+def write_output(idata,directory):
     outputfiles=[]
     for i in input_files:
         newname=i
@@ -201,14 +201,14 @@ def write_output(idata):
     # Parent Directory path
     parent_dir=str(os.getcwd())
     # Path
-    path=os.path.join(parent_dir,"files")
+    path=os.path.join(parent_dir,directory)
     try:
         os.mkdir(path)
     except:
         print("Directory Exists")
 
     for i in range(len(outputfiles)):
-        despath=str(os.getcwd())+"/files/"+outputfiles[i]
+        despath=str(os.getcwd())+"/"+directory+"/"+outputfiles[i]
         with open(despath, 'w+' , encoding='utf-8') as file:
             file.write(idata[i])
             file.close()
